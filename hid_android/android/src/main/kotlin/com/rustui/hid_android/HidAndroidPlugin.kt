@@ -67,12 +67,12 @@ class HidAndroidPlugin : FlutterPlugin, MethodCallHandler {
                 result.success(devices)
             }
             "open" -> {
-                device = usbManager.deviceList[call.argument("deviceName")]!!
-                connection = usbManager.openDevice(device)
-                (interfaceIndex, endpointIndex) = getReadIndices(device!!)!!
+                val device = usbManager.deviceList[call.argument<String>("deviceName")]!!
+                val connection = usbManager.openDevice(device)
+                val (interfaceIndex, endpointIndex) = getReadIndices(device)!!
                 result.success(
                     connection!!.claimInterface(
-                        device!!.getInterface(interfaceIndex!!),
+                        device.getInterface(interfaceIndex),
                         true
                     )
                 )
